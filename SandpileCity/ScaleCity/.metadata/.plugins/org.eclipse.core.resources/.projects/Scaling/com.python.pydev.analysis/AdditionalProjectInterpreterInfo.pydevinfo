@@ -1,0 +1,54 @@
+-- VERSION_4
+-- START DISKCACHE_2
+I:\Project\ScaleCity\.metadata\.plugins\org.eclipse.core.resources\.projects\Scaling\com.python.pydev.analysis\v2_indexcache
+code|1524987234939489000|I:\Project\ScaleCity\Scaling\code.py
+ScalePileCity|1525011537119489000|I:\Project\ScaleCity\Scaling\ScalePileCity.py
+-- END DISKCACHE
+-- START DICTIONARY
+2
+1=code
+2=ScalePileCity
+-- END DICTIONARY
+-- START TREE 1
+37
+C|2|C!11@C!19@
+L|2|L!19@L!11@
+R|1|R!11@
+RL|1|RL!11@
+Rp|1|Rp!11@
+a|1|a!11@
+cac|1|caculate!18@
+cal|1|calc_shift!10@
+che|1|check_outside!10@
+cho|2|choosenode!18@choosenode!10@
+cir|1|circumcircle2!10@
+dcc|1|dcC!11@
+del|2|delta!19@delta!11@
+h|1|h!19@
+ini|2|initiate!10@initiate!18@
+lin|2|LinearRegressOutlier!10@LinearRegress!10@
+max|2|maxnode!11@maxnode!19@
+mov|1|move_point!10@
+nam|2|namep!11@namerho!11@
+nod|2|nodelist!11@nodelist!19@
+one|2|onestep!10@onestep!18@
+rad|2|radius!11@radius!19@
+res|2|residuals2!10@residuals!10@
+rpj|1|RpJD!11@
+rpp|1|Rpp!11@
+rr|1|rr!11@
+rrh|4|Rrhox!11@Rrho!11@Rrhoo!11@Rrhox!19@
+san|1|sandpile!18@
+seq|2|sequence!19@sequence!11@
+tem|1|tempP!11@
+tim|1|time!11@
+tot|2|totpop!11@totDegree!11@
+tst|1|tstep!11@
+vor|1|voronoi2!10@
+w|1|w!11@
+x|1|x!11@
+xx|1|xx!11@
+-- END TREE
+-- START TREE 2
+0
+-- END TREE

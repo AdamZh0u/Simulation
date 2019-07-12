@@ -1,0 +1,20 @@
+# -*- coding: utf-8 -*-
+'''
+Created on 29 Apr 2018
+python 3.6
+@author: zzz
+'''
+from rtree import index
+import numpy as np
+import random
+import networkx as nx
+import matplotlib.pyplot as plt
+import math
+
+import matplotlib
+import sys
+import glob
+import os
+import imageio
+from scipy.optimize import leastsq
+from collections import defaultdict,

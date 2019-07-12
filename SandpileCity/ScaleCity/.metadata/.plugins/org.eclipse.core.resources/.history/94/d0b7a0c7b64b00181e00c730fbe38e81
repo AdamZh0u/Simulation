@@ -1,0 +1,76 @@
+# -*- coding: utf-8 -*-
+'''
+Created on 29 Apr 2018
+python 3.6
+@author: zzz
+'''
+from rtree import index
+import numpy as np
+import random
+import math
+import sys
+import glob
+import os
+import imageio
+from scipy.optimize import leastsq
+from collections import defaultdict
+#源代码中index2coor记录的是有人存活的格子，用ksequence记录每个格子人数
+#将index2coor变为记录存活的人的序号，len（index2coor）为总人数
+def initiate(radius,C,L = 10**5): 
+    coordinate = np.ones(2)*L/2.0
+    nodelist = {(coordinate[0],coordinate[1]):{1:1, 3:1, 5:0.0, 6:0, 7:1}} 
+    index2coor = {1:(coordinate[0],coordinate[1])}  
+    idx = index.Index() 
+    for key in nodelist:   
+        idx.insert(  nodelist[key][1],list(np.r_[coordinate,coordinate])  )                     
+    limitt = np.r_[coordinate - radius,coordinate + radius] 
+    return (nodelist,idx,limitt,index2coor)
+
+def choosenode(nodelist,limitt,C,index2coor):#?
+    white = ( (limitt[2]-limitt[0])*(limitt[3]-limitt[1])-len(nodelist) )*C
+    rnd = random.random()*( +len(nodelist)*C + white ) 
+    if rnd> sum(ksequence)+len(nodelist)*C:
+        ii = int( random.random()*(limitt[2]-limitt[0])   + limitt[0] )
+        jj = int( random.random()*(limitt[3]-limitt[1])   + limitt[1] )
+        if (ii,jj) not in nodelist:
+            return (ii,jj),0,ksequence
+    else:
+        A = np.array(ksequence)+C
+        B = np.cumsum(A)
+        ind = np.nonzero(B<rnd)
+        if len(ind[0])==0: 
+            pos = 1
+        else:
+            pos = ind[0][-1]+1  
+        return index2coor[pos],1,ksequence   
+        
+def onestep(nodelist,index2coor,idx,radius,C,limitt,totpop,ksequence,L=10**5):
+    two,flag,ksequence = choosenode(nodelist,limitt,C,ksequence,totpop)  
+    i = two[0]; j = two[1]  
+
+    intersection = list(  idx.intersection( [i-radius,j-radius, i+radius,j+radius] )  ) 
+    withincircle = 0    
+    if len(intersection) > 0: 
+
+        for key in intersection:  
+            if np.linalg.norm(np.array(index2coor[key]) - np.array([i,j])) <= radius:  
+                withincircle += 1
+                continue
+                
+        if flag==1: 
+            nodelist[(i,j)][7] += 1
+            nodelist[(i,j)][3] += 1
+            ksequence[ nodelist[(i,j)][1]-1 ] += 1
+            totpop += 1   
+            
+        elif  withincircle > 0  and  flag==0:
+            totpop += 1       
+            nodelist[(i,j)] = {1:len(nodelist)+1,3:1,5:np.linalg.norm(np.array([i,j])-L/2),6:0,7:1}
+            index2coor[len(nodelist)] = (i,j)
+            newpoint = [i,j]
+            idx.insert( len(nodelist), np.r_[newpoint, newpoint] )  
+            ksequence.append( nodelist[(i,j)][3] )            
+            for i in range(2):  
+                limitt[i]   = round(min(limitt[i],newpoint[i]-radius))
+                limitt[i+2] = round(max(limitt[i+2],newpoint[i]+radius)) 
+    return nodelist,index2coor,idx,limitt,totpop,ksequence
